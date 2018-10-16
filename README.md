@@ -20,9 +20,14 @@ dimensions of the grid, the `p_i` are the allowed sizes of the chunks, `k` is th
 `cont` is either `rc` for rook contiguity or `qc` for queen contiguity.  The .zip contains a .txt file of 
 the same name.
 
+
+The table is a reference which contains the sizes of some of the various sets of enumerations.
+
 This is Julia code.  If you already have Julia and Jupyter installed, you can
 set up IJulia by calling `Pkg.add("IJulia")` in the Julia REPL.  If you don't
 have either of these set up, you can get Julia from the creators at julialang.org
 and Jupyter from jupyter.org.
+
+
 
 Coming soon: a command line version of this tool
