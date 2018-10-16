@@ -8,8 +8,8 @@ The data format is as follows.  Each partition is on its own line.  Reading off 
 a partition appears as a comma-delimited list where each value corresponds to the chunk to which that cell belongs.  For
 example, the partition
 
-`1 1 2
-1 2 2
+`1 1 2\n
+1 2 2\n
 3 3 3
 `
 is represented as `1,1,2,1,2,2,3,3,3`.
