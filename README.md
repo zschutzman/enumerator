@@ -8,10 +8,11 @@ The data format is as follows.  Each partition is on its own line.  Reading off 
 a partition appears as a comma-delimited list where each value corresponds to the chunk to which that cell belongs.  For
 example, the partition
 
-`1 1 2  
+```
+1 1 2  
 1 2 2  
 3 3 3
-`
+```
 is represented as `1,1,2,1,2,2,3,3,3`.
 
 The file naming convention is `[<m>,<n>]_[<p_1>,<p_2>,...,<p_l>]_k_<cont>.zip` where `m` and `n` are the 
