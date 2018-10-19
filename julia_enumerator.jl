@@ -610,7 +610,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
     bad_hole_sizes = []#[ [i for i = 1:minimum(om_sizes)-1] ;[i for i = maximum(om_sizes)+1:2*minimum(om_sizes)-1]        ]
     iagr = make_iowa_graph()
     
-    for i=67:-1:1
+    for i=45:-1:31
     outf = open("ia_dists_pm500/$i.txt","w")
 
     tmp_oms = []
@@ -908,7 +908,7 @@ add_edge!(g , 59 , 60 )
 add_edge!(g , 59 , 72 )
 add_edge!(g , 60 , 61 )
 add_edge!(g , 60 , 73 )
-add_edge!(g , 60 , 74 )
+#add_edge!(g , 60 , 74 )
 add_edge!(g , 61 , 62 )
 add_edge!(g , 61 , 74 )
 add_edge!(g , 61 , 75 )
@@ -1099,7 +1099,6 @@ set_prop!(g, 99, :pop, 35862)
     
     
     print(g)
-    exit()
     
    return g 
 end
