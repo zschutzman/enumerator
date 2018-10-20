@@ -474,7 +474,8 @@ function biggen_graph(omlist, graph)
     end
     newoms = Set()
     dn = 0
-    for omino in omlist
+    while length(omlist)>0
+        omino = pop!(omlist)
         dn +=1
         print("BIGGENING $(length(omlist))  done $(dn)\r")
         for i=first_one(omino)[1]+1:length(omino)
@@ -610,7 +611,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
     bad_hole_sizes = []#[ [i for i = 1:minimum(om_sizes)-1] ;[i for i = maximum(om_sizes)+1:2*minimum(om_sizes)-1]        ]
     iagr = make_iowa_graph()
     
-    for i=45:-1:31
+    for i=61:-1:1
     outf = open("ia_dists_pm500/$i.txt","w")
 
     tmp_oms = []
