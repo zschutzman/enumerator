@@ -473,11 +473,9 @@ function biggen_graph(omlist, graph)
         return
     end
     newoms = Set()
-    dn = 0
     while length(omlist)>0
         omino = pop!(omlist)
-        dn +=1
-        print("BIGGENING $(length(omlist))  done $(dn)\r")
+        print("BIGGENING todo $(length(omlist)) \r")
         for i=first_one(omino)[1]+1:length(omino)
             z = zeros(Int8,length(omino))
             z[i]=1
