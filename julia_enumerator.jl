@@ -2,7 +2,8 @@
 # These are the packages we need to use.  If you don't
 # have one, uncomment and run in the next block the
 # appropriate lines and then run this block again
-
+lxx = 0
+lct = 0
 using Pkg
 using LightGraphs, MetaGraphs
 using IterTools
@@ -468,6 +469,9 @@ end
 
 
 function biggen_graph(omlist, graph)
+if length(omlist) == 0
+    return []
+end
     if length(omlist[1])!=nv(graph)
         print("BAD INPUT\n")
         return
@@ -475,7 +479,7 @@ function biggen_graph(omlist, graph)
     newoms = Set()
     while length(omlist)>0
         omino = pop!(omlist)
-        print("BIGGENING todo $(length(omlist)) \r")
+        #print("BIGGENING todo $(length(omlist)) \r")
         for i=first_one(omino)[1]+1:length(omino)
             z = zeros(Int8,length(omino))
             z[i]=1
@@ -549,6 +553,9 @@ end
 function iowa_holes(om,graph,pop_tol)
     #print("$(om)\r")
     g = induced_subgraph(graph, [i for i in findall(x->x == 0,om)])[1]
+    if length(connected_components(g)) > 3
+        return false
+    end
     for c in connected_components(g)
        p=0 
        for v in c
@@ -556,7 +563,7 @@ function iowa_holes(om,graph,pop_tol)
            p+= get_prop(g,v,:pop)
             
         end
-        if p < pop_tol[1] || pop_tol[2] < p < 2*pop_tol[1]
+        if p < pop_tol[1] #|| pop_tol[2] < p < 2*pop_tol[1]
             return false
         end
     end
@@ -564,9 +571,10 @@ function iowa_holes(om,graph,pop_tol)
 end
 
 function iowa_pop(om,graph)
-    
+    global lxx
+    global lct
     g = induced_subgraph(graph, [i for i in findall(x->x == 1,om)])[1]
-    print("len: $(length(vertices(g)))   pop: $(sum( get_prop(g,v,:pop) for v in vertices(g)   ))\r")
+    print("len: $(length(vertices(g))) prog: $(round((100*lct/lxx)))   pop: $(sum( get_prop(g,v,:pop) for v in vertices(g)   ))\r")
     return sum( get_prop(g,v,:pop) for v in vertices(g)   )
 
     
@@ -609,7 +617,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
     bad_hole_sizes = []#[ [i for i = 1:minimum(om_sizes)-1] ;[i for i = maximum(om_sizes)+1:2*minimum(om_sizes)-1]        ]
     iagr = make_iowa_graph()
     
-    for i=61:-1:1
+    for i=67:-1:67
     outf = open("ia_dists_pm500/$i.txt","w")
 
     tmp_oms = []
@@ -628,22 +636,39 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
         write(outf,"$(o)\n")
     end    
     tmp_oms = [ o for o in tmp_oms if iowa_pop(o,iagr)<=pop_tol[2]] 
-                              
+
     while length(tmp_oms)>0
        print("\n")
        cxx = sum(tmp_oms[1])+1
        sort!(tmp_oms)
-       tmp_oms = biggen_graph(tmp_oms,iagr)
-                                    
-       tmp_oms = [ o for o in tmp_oms if iowa_holes(o,iagr,pop_tol)] 
-       print("\n")                                         
+       new_oms = []
+       global lxx
+       global lct=0
+       lxx = length(tmp_oms)
+       while length(tmp_oms)>0
+       c = pop!(tmp_oms)
+        lct +=1
+        
+        n = biggen_graph([c],iagr)
+        
+        n = [ o for o in n if iowa_holes(o,iagr,pop_tol) && iowa_pop(o,iagr)<=pop_tol[2]]
+        new_oms = [new_oms;n]
+        if lct%1000 == 0
+            new_oms = unique(new_oms)
+        end
+       end 
+       tmp_oms = new_oms
+       print("\nVALIDATING $(length(tmp_oms))\n")
+       #tmp_oms = [ o for o in tmp_oms if iowa_holes(o,iagr,pop_tol)] 
+       
        oms = [o for o in tmp_oms if pop_tol[1]<=iowa_pop(o,iagr)<=pop_tol[2]   ]
+       
        for o in oms
         write(outf,"$(o)\n")
        end
-       tmp_oms = [ o for o in tmp_oms if iowa_pop(o,iagr)<=pop_tol[2]]                
+       #tmp_oms = [ o for o in tmp_oms if iowa_pop(o,iagr)<=pop_tol[2]]                
          
-       print("$i DONE SIZE $(cxx) checking $(length(tmp_oms)) \n have $(length(oms))\n")
+       print("$i DONE SIZE $(cxx) checking $(length(tmp_oms))  have $(length(oms))\n")
                                     
     end
 
