@@ -574,7 +574,7 @@ function iowa_pop(om,graph)
     global lxx
     global lct
     g = induced_subgraph(graph, [i for i in findall(x->x == 1,om)])[1]
-    print("len: $(length(vertices(g))) prog: $(round((100*lct/lxx)))   pop: $(sum( get_prop(g,v,:pop) for v in vertices(g)   ))\r")
+    print("len: $(length(vertices(g))) prog: $(round((100*lct/lxx)))   pop: $(sum( get_prop(g,v,:pop) for v in vertices(g)   ))     \r")
     return sum( get_prop(g,v,:pop) for v in vertices(g)   )
 
     
@@ -617,7 +617,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
     bad_hole_sizes = []#[ [i for i = 1:minimum(om_sizes)-1] ;[i for i = maximum(om_sizes)+1:2*minimum(om_sizes)-1]        ]
     iagr = make_iowa_graph()
     
-    for i=67:-1:67
+    for i=58:-1:46
     outf = open("ia_dists_pm500/$i.txt","w")
 
     tmp_oms = []
@@ -645,33 +645,45 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
        global lxx
        global lct=0
        lxx = length(tmp_oms)
+       n= []
        while length(tmp_oms)>0
        c = pop!(tmp_oms)
         lct +=1
-        
-        n = biggen_graph([c],iagr)
-        
-        n = [ o for o in n if iowa_holes(o,iagr,pop_tol) && iowa_pop(o,iagr)<=pop_tol[2]]
-        new_oms = [new_oms;n]
-        if lct%1000 == 0
-            new_oms = unique(new_oms)
+
+        n = [n;biggen_graph([c],iagr)]
+
+        print("len: $(sum(c)+1) prog: $(round(100*lct/lxx))    \r")
+
+        if lct%10000 == 0
+            n = unique(n)
         end
-       end 
+        if length(n) > 200000
+            n = unique(n)
+
+            n = [ o for o in n if iowa_holes(o,iagr,pop_tol) && iowa_pop(o,iagr)<=pop_tol[2] ]
+            new_oms = [new_oms;n]
+            new_oms = unique(new_oms)
+            n = []
+        end
+       end
+       n = unique(n)
+       n = [ o for o in n if iowa_holes(o,iagr,pop_tol) && iowa_pop(o,iagr)<=pop_tol[2] ]
+       new_oms = [new_oms;n]
+       new_oms = unique(new_oms)       
        tmp_oms = new_oms
        print("\nVALIDATING $(length(tmp_oms))\n")
-       #tmp_oms = [ o for o in tmp_oms if iowa_holes(o,iagr,pop_tol)] 
-       
+       #tmp_oms = [ o for o in tmp_oms if iowa_holes(o,iagr,pop_tol)]
+
        oms = [o for o in tmp_oms if pop_tol[1]<=iowa_pop(o,iagr)<=pop_tol[2]   ]
-       
+
        for o in oms
         write(outf,"$(o)\n")
        end
-       #tmp_oms = [ o for o in tmp_oms if iowa_pop(o,iagr)<=pop_tol[2]]                
-         
-       print("$i DONE SIZE $(cxx) checking $(length(tmp_oms))  have $(length(oms))\n")
-                                    
-    end
+       #tmp_oms = [ o for o in tmp_oms if iowa_pop(o,iagr)<=pop_tol[2]]
 
+       print("$i DONE SIZE $(cxx) checking $(length(tmp_oms))  have $(length(oms))   \n")
+
+    end
        
        
        
