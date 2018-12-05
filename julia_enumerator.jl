@@ -585,13 +585,7 @@ function iowa_holes(om,graph,pop_tol)
     
     #print("$(om)\r")
     g = induced_subgraph(graph, [i for i in findall(x->x == 0,om)])[1]
-    
-    return length(connected_components(g)) == 1
-    
-    
-    if length(connected_components(g)) > 1
-        return false
-    end
+
     for c in connected_components(g)
        p=0 
        for v in c
@@ -711,7 +705,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
 
         print("len: $(sum(c)+1) prog: $(round(100*lct/lxx))    \r")
 
-        if lct%10000 == 0
+        if lct%100000 == 0
             n = unique(n)
         end
         if length(n) > 200000
