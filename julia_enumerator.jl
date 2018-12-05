@@ -668,7 +668,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
 
 
 
-    for i=42:-1:1
+    for i=66:-1:1
     outf = open("ia_dists_pm500/$i.txt","w")
 
     tmp_oms = []
@@ -705,10 +705,10 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
 
         print("len: $(sum(c)+1) prog: $(round(100*lct/lxx))    \r")
 
-        if lct%100000 == 0
-            n = unique(n)
-        end
-        if length(n) > 200000
+        # if lct%100000 == 0
+        #     n = unique(n)
+        # end
+        if length(n) > 500000
             n = unique(n)
 
             n = [ o for o in n if iowa_holes(o,iagr,pop_tol) && iowa_pop(o,iagr)<=pop_tol[2]  ]
