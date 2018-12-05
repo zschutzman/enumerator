@@ -482,7 +482,9 @@ end
 
 
 
-function biggen_graph(omlist, graph)
+function biggen_graph(omlist, graph, dicto)
+
+
 if length(omlist) == 0
     return []
 end
@@ -493,15 +495,26 @@ end
     newoms = Set()
     while length(omlist)>0
         omino = pop!(omlist)
+
+        nbrs = Set()
+        for i in 1:length(omino)
+            if omino[i] == 1
+                nbrs = union(nbrs, dicto[i])
+            end
+        end
+        nbrs = collect(nbrs)
+
+        nbrs = [i for i in nbrs if omino[i] == 0 && i>first_one(omino)[1]]
+
         #print("BIGGENING todo $(length(omlist)) \r")
        # print("\n",last_one(omino),"\n")
         
-        for i=first_one(omino)[1]+1:length(omino)
+        for i in nbrs
             z = zeros(Int8,length(omino))
             z[i]=1
-                if valid_graph_om(omino+z,graph)
+                #if valid_graph_om(omino+z,graph)
                     push!(newoms,omino+z)
-                end
+                #end
             
         end
     end
@@ -638,13 +651,30 @@ function build_iowa_conflicts(omlist,iagr,pop_tol)
     return firstdict,conflict
 end
 
+
+
+
+
+
+
 function iowa_enumerator(pop_tol, num_parts, io=false)
     count = 0
     oms = []
     bad_hole_sizes = []#[ [i for i = 1:minimum(om_sizes)-1] ;[i for i = maximum(om_sizes)+1:2*minimum(om_sizes)-1]        ]
     iagr = make_iowa_graph()
-    
-    for i=54:-1:1
+
+
+
+    ia_dict = DefaultDict(Set)
+
+    for e in edges(iagr)
+        push!(ia_dict[src(e)], dst(e))
+        push!(ia_dict[dst(e)], src(e))
+    end
+
+
+
+    for i=42:-1:1
     outf = open("ia_dists_pm500/$i.txt","w")
 
     tmp_oms = []
@@ -677,7 +707,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
        c = pop!(tmp_oms)
         lct +=1
 
-        n = [n;biggen_graph([c],iagr)]
+        n = [n;biggen_graph([c],iagr, ia_dict)]
 
         print("len: $(sum(c)+1) prog: $(round(100*lct/lxx))    \r")
 
@@ -718,7 +748,7 @@ function iowa_enumerator(pop_tol, num_parts, io=false)
     end                
 return 0
     
-
+##end ia preenum
     print("MADE OMINOS\n")
     
     
