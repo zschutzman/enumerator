@@ -107,7 +107,7 @@ function enumerate(i)
 		found = 0
 
 		print('\n',i,'\n')
-		outf = open("ia_dists_pm500/dfs2-s2$i.txt","w")
+		outf = open("ia_dists_pm500/dfs-$i.txt","w")
 		s = vec(zeros(Int8,1,99))
 		s[i] = 1
 		recurse_dfs(s,Set(),[761000,762000],outf,i,i)
@@ -116,4 +116,4 @@ end
 
 
 
-@time enumerate(65)
+@time enumerate(2)
