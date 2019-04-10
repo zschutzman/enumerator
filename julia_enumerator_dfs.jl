@@ -387,87 +387,58 @@ end
 
 const iagr = make_iowa_graph()
 
-ia_dict = DefaultDict(Set)
+ia_d = DefaultDict(Set)
 
 for e in edges(iagr)
-    push!(ia_dict[src(e)], dst(e))
-    push!(ia_dict[dst(e)], src(e))
+	push!(ia_d[src(e)], dst(e))
+	push!(ia_d[dst(e)], src(e))
 end
 
+const ia_dict = ia_d
+
+
+    
+
+
 function distpop(om)
-    g = induced_subgraph(iagr, [i for i in findall(x->x == 1,om)])[1]
-    return sum( get_prop(g,v,:pop) for v in vertices(g)   )
+	g = induced_subgraph(iagr, [i for i in findall(x->x == 1,om)])[1]
+	return sum( get_prop(g,v,:pop) for v in vertices(g)   )
 end
 
 
 function iowa_holes(om,pop_tol)
-    g = induced_subgraph(iagr, [i for i in findall(x->x == 0,om)])[1]
-    for c in connected_components(g)
-       p=0 
-       for v in c           
-           p+= get_prop(g,v,:pop)    
-        end
-        if p < pop_tol[1]
-            return false
-        end
-    end
-    return true
-end
-
-function stepdown(om, recent, minm, maxm, forbid, pop_tol,outf)
-	print([ind for ind=1:99 if om[ind]==1],"                  ",'\r')
-	if distpop(om) > pop_tol[2] #|| !iowa_holes(om,pop_tol)
-		return
-
-	elseif pop_tol[1] <= distpop(om) <= pop_tol[2] && iowa_holes(om,pop_tol)
-		write(outf,"$(om)\n")
-
-	end
-
-
-	cands = Set()
-
-
-	for j=minm:maxm
-		if om[j] == 1
-			for nbr in ia_dict[j]
-				if nbr > minm && om[nbr] == 0 && nbr ∉ forbid
-					push!(cands,nbr)
-				end
-			end
+	g = induced_subgraph(iagr, [i for i in findall(x->x == 0,om)])[1]
+	for c in connected_components(g)
+		if sum( get_prop(g,v,:pop) for v in c  )  < pop_tol[1]
+			return false  
 		end
 	end
-
-
-for c in cands
-	newom = om[:]
-	newom[c] = 1
-	stepdown(newom,c,minm,max(c,maxm),forbid,pop_tol,outf)
-	filter!(e->e≠c,cands)
-	push!(forbid,c)
+	return true
 end
 
 
 
-end
 
-sf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-nums = [67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99]
+
+
 function recurse_dfs(om, forbid, pop_tol, outf,minm,maxm)
-# 	if -1 ∉ sf.-om
+	# 	if -1 ∉ sf.-om
 
- 	print(distpop(om), "  ",[ind for ind=1:99 if om[ind]==1],"                  ",'\r')
-# end
-	if [ind for ind=1:99 if om[ind]==1] == [67,68,79]
-		print("\nAAAAAA\n")
-		exit()
-	end
-	if distpop(om) > pop_tol[2] || !iowa_holes(om,pop_tol)
+	# end
+
+	if distpop(om) > pop_tol[2]
 		return
 
 	elseif pop_tol[1] <= distpop(om) <= pop_tol[2] && iowa_holes(om,pop_tol)
-		write(outf,"$(om)\n")
-
+		str = replace(string(om), "," => "")
+		str = replace(str, "Int8" => "")
+		str = replace(str, "[" => "")
+		str = replace(str, "]" => "")
+		str = replace(str, " " => "")
+		write(outf,"$(str)\n")
+		global found
+		found +=1
+		print("found:  ",found,"                  ",'\r')
 	end
 
 
@@ -483,14 +454,14 @@ function recurse_dfs(om, forbid, pop_tol, outf,minm,maxm)
 		end
 
 	end
-	cands = sort(collect(cands))
+	#cands = sort(collect(cands))
 	newforbid = Set(forbid)
 	for c in cands
 		om[c] = 1
 		if iowa_holes(om,pop_tol)
-			recurse_dfs(om,newforbid,pop_tol,outf,minm,99)
-	push!(newforbid,c)
-		
+			recurse_dfs(om,newforbid,pop_tol,outf,minm,max(c,maxm))
+			push!(newforbid,c)
+
 			
 		end
 		om[c] = 0
@@ -502,25 +473,21 @@ end
 
 
 
-function enumerate()
-for i=67:67
-	outf = open("ia_dists_pm500/dfs2$i.txt","w")
-	s = vec(zeros(Int8,1,99))
-	s[i] = 1
-	stepdown(s,i,i,i,Set(),[761000,762000],outf)
-
-end
-end
 
 
 function enumerate2()
-	for i=66:66
-	outf = open("ia_dists_pm500/dfs2-s$i.txt","w")
-	s = vec(zeros(Int8,1,99))
-	s[i] = 1
-	recurse_dfs(s,Set(),[761000,762000],outf,i,i)
+	global found
 
-end
+	for i=39:-1:35
+		found = 0
+
+		print('\n',i,'\n')
+		outf = open("ia_dists_pm500/dfs2-s2$i.txt","w")
+		s = vec(zeros(Int8,1,99))
+		s[i] = 1
+		recurse_dfs(s,Set(),[761000,762000],outf,i,i)
+		close(outf)
+	end
 end
 
 
