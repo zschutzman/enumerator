@@ -353,7 +353,7 @@ function enumerator(grid, om_sizes, num_parts, cont="rc", io=false)
         os = om_sizes
         gr = grid
         np = num_parts
-        outfile = open(replace("../pentominos/enum_$(gr)_$(os)_$(Int8(np))_$(cont).txt"," "=>""),"w")
+        outfile = open(replace("/enum_$(gr)_$(os)_$(Int8(np))_$(cont).txt"," "=>""),"w")
     end
     
     
