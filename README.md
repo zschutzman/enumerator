@@ -1,7 +1,7 @@
 # enumerator
 
 This is the repository for my enumerator of grid graph partitions.
-For details about the algorithm and an implementation, see the Jupyter notebook.
+For details about the algorithm and an implementation, see the Julia [implementation iPython notebook](/gridenum_nb_julia.ipynb).
 
 
 A partition of an `m` by `n` grid into `k` pieces of sizes in a list `[<p_1>,<p_2>,...,<p_l>]` is 
@@ -16,7 +16,7 @@ For example, the following is a partition of the 3 by 3 grid graph into 3 pieces
 3 3 3
 ```
 
-This code enumerates all such partitions and (if desired) outputs them into a text file.  The data format is 
+This code counts all such partitions and (if desired) outputs them into a text file.  The data format is 
 a left-to-right, top-to-bottom linearization of the partition.  For example, the above partition would be 
 serialized as
 
@@ -33,10 +33,10 @@ dimensions of the grid, the `p_i` are the allowed sizes of the chunks, `k` is th
 `cont` is either `rc` for rook contiguity or `qc` for queen contiguity.  
 
 
-[This table](https://mggg.org/table) is a reference which contains the sizes of some of the various sets of enumerations.
-
 This is Julia code.  If you already have Julia and Jupyter installed, you can
 set up IJulia by calling `using Pkg` and `Pkg.add("IJulia")` in the Julia REPL.  If you don't
 have either of these set up, you can get Julia from the creators at julialang.org
-and Jupyter from jupyter.org.
+and Jupyter from jupyter.org.  There is a [Python implementation notebook](/gridenum_nb_python.ipynb) 
+which implements the same algorithm, but due to performance differences, the Julia code runs about 
+ten times faster than the Python code.
 
