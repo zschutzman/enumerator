@@ -1,7 +1,7 @@
 # enumerator
 
 This is the repository for my enumerator of grid graph partitions.
-For details about the algorithm and an implementation, see the Julia [implementation iPython notebook](/gridenum_nb_julia.ipynb).
+For details about the algorithm and an implementation, see the [Julia implementation notebook](/gridenum_nb_julia.ipynb).
 
 
 A partition of an `m` by `n` grid into `k` pieces of sizes in a list `[<p_1>,<p_2>,...,<p_l>]` is 
