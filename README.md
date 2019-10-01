@@ -52,7 +52,9 @@ Cite this code as
         publisher={Zenodo}, 
         author={Zachary Schutzman}, 
         year=2019, 
-        month=10}
+        month=10,
+        url={https://github.com/zschutzman/enumerator},
+}
 ```
 
 This code is available under an [MIT License](https://opensource.org/licenses/MIT).  
