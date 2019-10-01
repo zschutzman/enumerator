@@ -48,7 +48,7 @@ Cite this code as
 @article{schutzman2019enumerator, 
         title={zschutzman/enumerator: v0.1.5}, 
         DOI={10.5281/zenodo.3467675}, 
-        abstractNote={<p>Code for enumerating polyomino tilings of grid graphs.</p>}, 
+        abstractNote={Code for enumerating polyomino tilings of grid graphs.}, 
         publisher={Zenodo}, 
         author={Zachary Schutzman}, 
         year={2019}, 
