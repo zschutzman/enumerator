@@ -4,7 +4,7 @@
 
 
 This code enumerates the polyomino tilings (i.e. partitions) of a grid graph.
-For details about the algorithm and an implementation, see the [Julia implementation notebook](/gridenum_nb_julia.ipynb).
+For details about the algorithm and implementation, see the [Julia implementation notebook](/gridenum_nb_julia.ipynb).
 
 
 A partition of an `m` by `n` grid into `k` pieces of sizes in a list `[<p_1>,<p_2>,...,<p_l>]` is 
