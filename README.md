@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3467675.svg)](https://doi.org/10.5281/zenodo.3467675)
 
 
-This code enumerates the polyomino tilings (i.e. partitions) of a grid graph.
+This code enumerates the polyomino tilings of a grid graph.
 For details about the algorithm and implementation, see the [Julia implementation notebook](/gridenum_nb_julia.ipynb).
 
 
@@ -31,10 +31,7 @@ must be composed of cells which meet only along the edges of the squares in the 
 queen contiguity also permits cells which meet at corners.
 
 
-The file naming convention is `[<m>,<n>]_[<p_1>,<p_2>,...,<p_l>]_k_<cont>.txt` where `m` and `n` are the 
-dimensions of the grid, the `p_i` are the allowed sizes of the chunks, `k` is the number of pieces, and 
-`cont` is either `rc` for rook contiguity or `qc` for queen contiguity.  
-
+Unfortunately, even for small input values, the number of valid tilings can be extremely large, numbering in the billions or trillions.  If you'd like the output for some smaller grids, please contact the author.
 
 This is Julia code.  If you already have Julia and Jupyter installed, you can
 set up IJulia by calling `using Pkg` and `Pkg.add("IJulia")` in the Julia REPL.  If you don't
