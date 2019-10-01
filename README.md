@@ -39,9 +39,7 @@ dimensions of the grid, the `p_i` are the allowed sizes of the chunks, `k` is th
 This is Julia code.  If you already have Julia and Jupyter installed, you can
 set up IJulia by calling `using Pkg` and `Pkg.add("IJulia")` in the Julia REPL.  If you don't
 have either of these set up, you can get Julia from the creators at julialang.org
-and Jupyter from jupyter.org.  There is a [Python implementation notebook](/gridenum_nb_python.ipynb) 
-which implements the same algorithm, but due to performance differences, the Julia code runs about 
-ten times faster than the Python code.
+and Jupyter from jupyter.org.
 
 Cite this code as 
 ```
