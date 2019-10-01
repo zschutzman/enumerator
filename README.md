@@ -1,5 +1,8 @@
 # enumerator
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3467675.svg)](https://doi.org/10.5281/zenodo.3467675)
+
+
 This is the repository for my enumerator of grid graph partitions.
 For details about the algorithm and an implementation, see the [Julia implementation notebook](/gridenum_nb_julia.ipynb).
 
@@ -39,4 +42,18 @@ have either of these set up, you can get Julia from the creators at julialang.or
 and Jupyter from jupyter.org.  There is a [Python implementation notebook](/gridenum_nb_python.ipynb) 
 which implements the same algorithm, but due to performance differences, the Julia code runs about 
 ten times faster than the Python code.
+
+Cite this code as 
+```
+@article{schutzman2019enumerator, 
+        title={zschutzman/enumerator: v0.1.5}, 
+        DOI={10.5281/zenodo.3467675}, 
+        abstractNote={<p>Code for enumerating polyomino tilings of grid graphs.</p>}, 
+        publisher={Zenodo}, 
+        author={Zachary Schutzman}, 
+        year={2019}, 
+        month={Oct}}
+```
+
+This code is available under an [MIT License](https://opensource.org/licenses/MIT).  
 
