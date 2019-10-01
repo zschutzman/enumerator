@@ -51,8 +51,8 @@ Cite this code as
         abstractNote={Code for enumerating polyomino tilings of grid graphs.}, 
         publisher={Zenodo}, 
         author={Zachary Schutzman}, 
-        year={2019}, 
-        month={Oct}}
+        year=2019, 
+        month=10}
 ```
 
 This code is available under an [MIT License](https://opensource.org/licenses/MIT).  
