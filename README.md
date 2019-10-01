@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3467675.svg)](https://doi.org/10.5281/zenodo.3467675)
 
 
-This is the repository for my enumerator of grid graph partitions.
+This code enumerates the polyomino tilings (i.e. partitions) of a grid graph.
 For details about the algorithm and an implementation, see the [Julia implementation notebook](/gridenum_nb_julia.ipynb).
 
 
