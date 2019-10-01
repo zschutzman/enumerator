@@ -45,7 +45,7 @@ ten times faster than the Python code.
 
 Cite this code as 
 ```
-@article{schutzman2019enumerator, 
+@misc{schutzman2019enumerator, 
         title={zschutzman/enumerator: v0.1.5}, 
         DOI={10.5281/zenodo.3467675}, 
         abstractNote={Code for enumerating polyomino tilings of grid graphs.}, 
