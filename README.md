@@ -31,7 +31,7 @@ must be composed of cells which meet only along the edges of the squares in the 
 queen contiguity also permits cells which meet at corners.
 
 
-Unfortunately, even for small input values, the number of valid tilings can be extremely large, numbering in the billions or trillions.  If you'd like the output for some smaller grids, please contact the author.
+Unfortunately, even for small input values, the number of valid tilings can be extremely large, numbering in the billions or trillions.  If you'd like the output for some smaller grids, please get in touch by email or opening an issue on this repository.
 
 This is Julia code.  If you already have Julia and Jupyter installed, you can
 set up IJulia by calling `using Pkg` and `Pkg.add("IJulia")` in the Julia REPL.  If you don't
